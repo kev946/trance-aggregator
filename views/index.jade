@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  br
+  p #{song}
+  form(role='form', action='/', method='post', style='max-width: 300px;')
+    button.btn.btn-default(type='submit', name='song', value='#{song}') Download 
