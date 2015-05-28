@@ -6,17 +6,18 @@
 <title>Trance Aggregator</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="./stylesheets/jplayer.pink.flag.min.css" rel="stylesheet" type="text/css" />
+<link href="./stylesheets/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="jquery.jplayer.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-$(document).ready(function(){
+$(document).ready(function() {
   getCurrentSongName();
   setInterval(getCurrentSongName, 5000);
 
 	var stream = {
 		title: "DI Trance",
-    mp3: "http://pub7.di.fm:80/di_trance"
+    mp3: "http://pub7.di.fm:80/di_vocaltrance"
 	},
 	ready = false;
 
@@ -43,7 +44,17 @@ $(document).ready(function(){
 		keyEnabled: true
 	});
 
+  $("#current_track").click(function() {
+    $.post("download-track",
+    {
+      song: document.getElementById("current_track").innerHTML
+    },
+    function(data, status) {
+      alert("Data: " + data + "\nStatus: " + status);
+    });
+  });
 });
+
 
 function getCurrentSongName() {
   $.ajax({
@@ -58,7 +69,7 @@ function getCurrentSongName() {
 </head>
 <body>
 <div id="current_track">
-  <p>""</p>
+  <p></p>
 </div>
 <br>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>

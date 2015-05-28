@@ -14,7 +14,7 @@ router.get('/current-track', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/download-track', function(req, res) {
   if (req.body.song) getYouTubeVideoId(req.body.song, function(err, videoId) {
     if (!err) downloadYouTubeVideo(videoId, function(err, result) {
       if (!err) res.send(err);
