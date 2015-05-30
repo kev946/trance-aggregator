@@ -3,6 +3,7 @@ var router = express.Router();
 var YouTube = require('youtube-node');
 var request = require('request');
 var process = require('child_process');
+var async = require('async');
 
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -11,6 +12,12 @@ router.get('/', function(req, res, next) {
 router.get('/current-track', function(req, res, next) {
   getSongName(function(err, songName) {
     if (!err) res.send(songName);
+  });
+});
+
+router.get('/playlists', function(req, res, next) {
+  getPlaylists(function(err, playlists) {
+    if (!err) res.send(playlists);
   });
 });
 
@@ -23,6 +30,35 @@ router.post('/download-track', function(req, res) {
   });
   res.end();
 });
+
+function getPlaylists(cb) {
+  request('http://listen.di.fm/public3', function(err, res, body) {
+    if (!err && res.statusCode == 200) {
+      var playlists = [];
+      var channels = JSON.parse(body);
+      
+      async.each(channels, function(channel, fn) {
+        request(channel.playlist, function(err, res, body) {
+          if (!err && res.statusCode == 200) {
+            var streamRegExp = /File\d=([^\n]+)/;
+            var streams = body.match(streamRegExp);
+            playlists.push({'title': channel.name, 'mp3': streams[1]});
+            fn();
+          }
+        });
+      }, function(err) {
+        //called when all done, or error occurs
+        console.log(playlists);
+        playlists.sort(function(a, b) {
+          if (a.title > b.title) return 1;
+          if (a.title < b.title) return -1;
+          return 0;
+        });
+        cb(null, playlists);
+      });
+    }
+  });
+}
 
 function getSongName(fn) {
 // trance.fm
@@ -46,7 +82,7 @@ function getSongName(fn) {
   request('http://api.audioaddict.com/v1/di/track_history', function(err, res, body) {
     if (!err && res.statusCode == 200) {
       var jsonObj = JSON.parse(body);
-      track = jsonObj['1'].track;
+      track = jsonObj['105'].track; // '1' trance, '105' liquiddnb
       fn(null, track); 
     }
   });
