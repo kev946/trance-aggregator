@@ -4,6 +4,6 @@ body {
   text-align: center;
 }
 
-#channel {
+#channel, #current_track {
   color: #ffffff;
 }

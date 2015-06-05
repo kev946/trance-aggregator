@@ -14,8 +14,8 @@
 //<![CDATA[
 $(document).ready(function(){
 
-  //setInterval(getCurrentSongName, 5000);
   var myPlaylist = null;
+  var intervalId = -1;
 
   $.ajax({
     url: "playlists",
@@ -43,13 +43,18 @@ $(document).ready(function(){
     jQuery.each(playlist, function(index, obj) {
       if (index == current) {
         document.getElementById("channel").innerHTML = obj.title;
+        getCurrentSongName(obj.id);
+        if (intervalId != -1)
+          clearInterval(intervalId);
+        intervalId = setInterval(getCurrentSongName, 5000, obj.id);
       }
     });
   });
 
-  function getCurrentSongName() {
+  function getCurrentSongName(channel_id) {
     $.ajax({
       url: "current-track",
+      data: { "channel_id": channel_id },
       success: function(data) {
         document.getElementById("current_track").innerHTML = data;
       }
@@ -62,6 +67,9 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="channel">
+  <h1></h1>
+</div>
+<div id="current_track">
   <h1></h1>
 </div>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>

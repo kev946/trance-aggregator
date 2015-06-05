@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/current-track', function(req, res, next) {
-  getSongName(function(err, songName) {
+  getCurrentTrack(req.query.channel_id, function(err, songName) {
     if (!err) res.send(songName);
   });
 });
@@ -42,13 +42,12 @@ function getPlaylists(cb) {
           if (!err && res.statusCode == 200) {
             var streamRegExp = /File\d=([^\n]+)/;
             var streams = body.match(streamRegExp);
-            playlists.push({'title': channel.name, 'mp3': streams[1]});
+            playlists.push({'title': channel.name, 'mp3': streams[1], 'id': channel.id});
             fn();
           }
         });
       }, function(err) {
         //called when all done, or error occurs
-        console.log(playlists);
         playlists.sort(function(a, b) {
           if (a.title > b.title) return 1;
           if (a.title < b.title) return -1;
@@ -60,7 +59,7 @@ function getPlaylists(cb) {
   });
 }
 
-function getSongName(fn) {
+function getCurrentTrack(channel_id, fn) {
 // trance.fm
 //  var options = {
 //    url: 'http://ch01a.320.trance.fm/7.html',
@@ -82,7 +81,7 @@ function getSongName(fn) {
   request('http://api.audioaddict.com/v1/di/track_history', function(err, res, body) {
     if (!err && res.statusCode == 200) {
       var jsonObj = JSON.parse(body);
-      track = jsonObj['105'].track; // '1' trance, '105' liquiddnb
+      track = jsonObj[channel_id].track;
       fn(null, track); 
     }
   });
