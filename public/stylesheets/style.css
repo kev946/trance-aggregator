@@ -7,3 +7,120 @@ body {
 #channel, #current_track {
   color: #ffffff;
 }
+
+.button-small{
+    color: #fff !important;
+    word-spacing: 0.25em;
+   font-family: 'Open Sans', sans-serif;
+   text-transform: uppercase;
+   border: none;
+    line-height: 22px;
+    padding: 12px 13px 11px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 18px;
+    text-decoration: none;
+}
+.button-small:visited{
+      color: #fff;
+}
+.button-small{
+    padding: 6px 12px 5px;
+    font-size: 11px;
+    color: #fff;
+    text-shadow: none;
+}
+.button-small:hover{
+    color: rgba(255,255,255, 0.75);
+    text-decoration: none;
+    -webkit-box-shadow:inset 0 10px 20px rgba(255,255,255, 0.10);
+    -moz-box-shadow: inset 0 10px 20px rgba(255,255,255, 0.10);
+    box-shadow: inset 0 10px 20px rgba(255,255,255, 0.10);
+}
+.button-small:active {
+    -webkit-box-shadow: inset 0 2px 2px rgba(0,0,0, 0.3), inset 0 10px 20px rgba(0,0,0, 0.08);
+    -moz-box-shadow: inset 0 2px 2px rgba(0,0,0, 0.3), inset 0 10px 20px rgba(0,0,0, 0.08);
+    box-shadow: inset 0 2px 2px rgba(0,0,0, 0.3), inset 0 10px 20px rgba(0,0,0, 0.08);
+}
+.rounded3 {
+  -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.brown_dark{
+    background: #4E2500;     
+}
+.brown_normal{
+    background: #783A00;     
+}
+.brown_light{
+    background: #BC8654;     
+}
+
+.salmon_dark {
+    background: #8A1215;
+}
+.salmon_normal {
+    background: #d5383c;
+}
+.salmon_light {
+    background: #EA8B8E;
+}
+
+.purple_dark {
+    background: #6B63CF;
+}
+.purple_normal {
+    background: #938DE7;
+}
+.purple_light {
+    background: #AAA5E7;
+}
+.orange_dark {
+  background: #f76b16;      
+}
+.orange_normal {
+    background: #FB9150;     
+}
+.orange_light {
+    background: #FBAD7D;     
+}
+
+.blue_dark {
+  background: #3b5998;    
+}
+.blue_normal {
+    background: #6E8CCC;    
+}
+.blue_light {
+    background: #879DCC;    
+}
+
+.red_dark {
+  background: #d74340;      
+}
+.red_normal {
+    background: #EB726F;      
+}
+.red_light {
+    background: #EB9390;      
+}
+.green_dark {
+  background: #4B701D;
+}
+.green_normal {
+    background: #87ac5a;
+}
+.green_light {
+    background: #B3D689;
+}
+.grey_dark {
+  background: #474747;    
+}
+.grey_normal {
+    background: #5e5e5e;    
+}
+.grey_light {
+    background: #AFAFAF;    
+}

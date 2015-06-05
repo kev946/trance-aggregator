@@ -21,8 +21,9 @@ router.get('/playlists', function(req, res, next) {
   });
 });
 
-router.post('/download-track', function(req, res) {
-  if (req.body.song) getYouTubeVideoId(req.body.song, function(err, videoId) {
+router.get('/download-track', function(req, res) {
+  console.log(req.query.track);
+  if (req.query.track) getYouTubeVideoId(req.query.track, function(err, videoId) {
     if (!err) downloadYouTubeVideo(videoId, function(err, result) {
       if (!err) res.send(err);
       else res.send(result);

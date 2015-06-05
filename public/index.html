@@ -61,6 +61,17 @@ $(document).ready(function(){
     });
   }
 
+
+  $("#download").click(function() {
+    $.ajax({
+      url: "download-track",
+      data: { "track": document.getElementById("current_track").innerHTML },
+      success: function(data) {
+        alert(data);
+      }
+    });
+  });
+
 });
 //]]>
 </script>
@@ -71,6 +82,9 @@ $(document).ready(function(){
 </div>
 <div id="current_track">
   <h1></h1>
+</div>
+<div id="download">
+  <a class="button-small purple_dark">Download</a>
 </div>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
