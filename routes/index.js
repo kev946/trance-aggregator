@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var YouTube = require('youtube-node');
-var request = require('request');
-var process = require('child_process');
-var async = require('async');
+var express = require('express')
+  , router = express.Router()
+  , YouTube = require('youtube-node')
+  , request = require('request')
+  , process = require('child_process')
+  , async = require('async')
 
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -22,12 +22,12 @@ router.get('/playlists', function(req, res, next) {
 });
 
 router.get('/download-track', function(req, res) {
-  console.log(req.query.track);
-  if (req.query.track) getYouTubeVideoId(req.query.track, function(err, videoId) {
-    if (!err) downloadYouTubeVideo(videoId, function(err, result) {
-      if (!err) res.send(err);
-      else res.send(result);
-    });
+  var track = req.query.track;
+  if (!validateTrack(track))
+    res.end();
+
+  if (track) getYouTubeVideoId(track, function(err, videoId) {
+    if (!err) downloadYouTubeVideo(videoId);
   });
   res.end();
 });
@@ -58,6 +58,11 @@ function getPlaylists(cb) {
       });
     }
   });
+}
+
+function validateTrack(track) {
+    if (track == '')
+        return false;
 }
 
 function getCurrentTrack(channel_id, fn) {
@@ -98,11 +103,17 @@ function getYouTubeVideoId(songName, fn) {
   });
 }
 
-function downloadYouTubeVideo(videoId, fn) {
+var downloading = new Object();
+
+function downloadYouTubeVideo(videoId) {
+  if (videoId in downloading) {
+      return;
+  }
   // download video and convert to mp3
-  process.exec('youtube-dl --extract-audio --audio-format=mp3 https://www.youtube.com/watch?v=' + videoId, function callback(error, stdout, stderr) {
-    fn(null, stdout);
+  var proc = process.exec('youtube-dl --extract-audio --audio-format=mp3 -o \'./public/downloads/%(title)s.%(ext)s\' ' + videoId, function callback(error, stdout, stderr) {
+    delete downloading[videoId];
   });
+  downloading[videoId] = proc;
 }
 
 module.exports = router;

@@ -67,7 +67,7 @@ $(document).ready(function(){
       url: "download-track",
       data: { "track": document.getElementById("current_track").innerHTML },
       success: function(data) {
-        alert(data);
+
       }
     });
   });
@@ -86,6 +86,7 @@ $(document).ready(function(){
 <div id="download">
   <a class="button-small purple_dark">Download</a>
 </div>
+<a href="downloads">Downloads</a>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
 	<div class="jp-type-playlist">
